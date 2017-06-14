@@ -1,23 +1,17 @@
-function hasUserMedia() {
-    //check if the browser supports the WebRTC 
-    return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia);
-}
+// Enabling video and audio channels 
+var constraints = {
+    video: true,
+    audio: true
+};
 
-if (hasUserMedia()) {
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia;
-
-    //enabling video and audio channels 
-    navigator.getUserMedia({
-        video: true,
-        audio: true
-    }, function (stream) {
+// Request user permission to get media input 
+navigator.mediaDevices.getUserMedia(constraints)
+    .then(function (stream) {
         var video = document.querySelector('video');
 
-        //inserting our stream to the video tag     
+        // Store the media stream in the video tag
         video.src = window.URL.createObjectURL(stream);
-    }, function (err) {});
-} else {
-    alert("WebRTC is not supported");
-}
+    })
+    .catch(function (err) {
+        console.log(err.name + ": " + err.message);
+    });
