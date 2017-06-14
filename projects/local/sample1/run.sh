@@ -1,2 +1,1 @@
-echo "TECHIO> open /project/target/local/sample1"
-sleep 30
+echo "TECHIO> open -s /project/target/local/sample1"
