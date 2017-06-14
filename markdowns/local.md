@@ -1,5 +1,9 @@
 The MediaStream API was designed to easy access the media streams from local cameras and microphones. The `getUserMedia()` method is the primary way to access local input devices.
 
+```js
+var promise = navigator.mediaDevices.getUserMedia(constraints);
+```
+
 The API has a few key points
 - A real-time media stream is represented by a stream object in the form of video or audio
 - It provides a security level through user permissions asking the user before a web application can start fetching a stream
@@ -9,6 +13,8 @@ The API has a few key points
 
 There are two ways to output MediaStream objects. First, we can render output into a video or audio element. Secondly, we can send output to the RTCPeerConnection object, which then send it to a remote peer.
 
+### Render the media output to a video
+
 Using the MediaStream API
 Let's create a simple WebRTC application. It will show a video element on the screen, ask the user permission to use the camera, and show a live video stream in the browser.
 
@@ -16,3 +22,10 @@ Let's create a simple WebRTC application. It will show a video element on the sc
 
 > Here we create the `hasUserMedia()` function which checks whether WebRTC is supported or not. Then we access the `getUserMedia` function where the second parameter is a callback that accept the stream coming from the user's device. Then we load our stream into the video element using window.URL.createObjectURL which creates a URL representing the object given in parameter.
 
+### Send video output to a peer
+
+The RTCPeerConnection API is the core of the peer-to-peer connection between each of the browsers. To create the RTCPeerConnection objects simply write
+
+```js
+var pc = RTCPeerConnection(configuration);
+```
