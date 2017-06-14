@@ -1,0 +1,1 @@
+echo "TECHIO> open /project/target/local/sample1"

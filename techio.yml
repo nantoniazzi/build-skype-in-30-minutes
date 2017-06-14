@@ -8,3 +8,8 @@ plan:
     statement: markdowns/server.md
   - title: Connected clients
     statement: markdowns/connected.md
+
+projects:
+  "default":
+    - root: /projects
+    - image: node:alpine
