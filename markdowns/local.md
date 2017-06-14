@@ -1,4 +1,4 @@
-The MediaStream API was designed to easy access the media streams from local cameras and microphones. The getUserMedia() method is the primary way to access local input devices.
+The MediaStream API was designed to easy access the media streams from local cameras and microphones. The `getUserMedia()` method is the primary way to access local input devices.
 
 The API has a few key points
 - A real-time media stream is represented by a stream object in the form of video or audio
@@ -14,5 +14,5 @@ Let's create a simple WebRTC application. It will show a video element on the sc
 
 @[Webcam demo]({"stubs":["local/sample1/client.js"], "command":"sh /project/target/local/sample1/run.sh"})
 
-> Here we create the hasUserMedia() function which checks whether WebRTC is supported or not. Then we access the getUserMedia function where the second parameter is a callback that accept the stream coming from the user's device. Then we load our stream into the video element using window.URL.createObjectURL which creates a URL representing the object given in parameter.
+> Here we create the `hasUserMedia()` function which checks whether WebRTC is supported or not. Then we access the `getUserMedia` function where the second parameter is a callback that accept the stream coming from the user's device. Then we load our stream into the video element using window.URL.createObjectURL which creates a URL representing the object given in parameter.
 
