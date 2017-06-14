@@ -35,7 +35,6 @@ callButton.onclick = function () {
         offerToReceiveAudio: true,
         offerToReceiveVideo: true
     }).then(function (desc) {
-        debugger;
         pc1.setLocalDescription(desc);
         pc2.setRemoteDescription(desc);
 
@@ -56,11 +55,9 @@ callButton.onclick = function () {
         pc2.addIceCandidate(new RTCIceCandidate(event.candidate));
     };
 
-
     pc2.onicecandidate = function (e) {
         pc1.addIceCandidate(new RTCIceCandidate(event.candidate));
     };
-
 };
 
 hangupButton.onclick = function () {
