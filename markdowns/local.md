@@ -12,7 +12,7 @@ There are two ways to output MediaStream objects. First, we can render output in
 Using the MediaStream API
 Let's create a simple WebRTC application. It will show a video element on the screen, ask the user permission to use the camera, and show a live video stream in the browser.
 
-@[Webcam demo]({"stubs":[client.js], "command":"sh /project/target/local/sample1/run.sh"})
+@[Webcam demo]({"stubs":["local/sample1/client.js"], "command":"sh /project/target/local/sample1/run.sh"})
 
 Here we create the hasUserMedia() function which checks whether WebRTC is supported or not. Then we access the getUserMedia function where the second parameter is a callback that accept the stream coming from the user's device. Then we load our stream into the video element using window.URL.createObjectURL which creates a URL representing the object given in parameter.
 
