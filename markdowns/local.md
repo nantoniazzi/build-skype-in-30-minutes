@@ -30,3 +30,7 @@ The RTCPeerConnection API is the core of the peer-to-peer connection between eac
 ```js
 var pc = RTCPeerConnection(configuration);
 ```
+
+## WIIIIIPPP
+
+@[Webcam demo]({"stubs":["local/sample2/client.js", "local/sample2/index.html", "local/sample2/main.css"], "command":"sh /project/target/local/sample2/run.sh"})
