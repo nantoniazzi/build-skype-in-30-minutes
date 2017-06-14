@@ -10,6 +10,6 @@ plan:
     statement: markdowns/connected.md
 
 projects:
-  - "default":
-    - root: /projects
-    - image: node:alpine
+  "default":
+    root: /projects
+    image: node:alpine
