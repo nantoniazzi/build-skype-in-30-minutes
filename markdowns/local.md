@@ -1,8 +1,4 @@
-The MediaStream API was designed to easy access the media streams from local cameras and microphones. The `getUserMedia()` method is the primary way to access local input devices.
-
-```js
-var promise = navigator.mediaDevices.getUserMedia(constraints);
-```
+The MediaStream API was designed to easy access the media streams from local cameras and microphones.
 
 The API has a few key points
 - A real-time media stream is represented by a stream object in the form of video or audio
@@ -15,7 +11,12 @@ There are two ways to output MediaStream objects. First, we can render output in
 
 ### Render the media output to a video
 
-Using the MediaStream API
+The `getUserMedia()` method is the primary way to access local input devices.
+
+```js
+var promise = navigator.mediaDevices.getUserMedia(constraints);
+```
+
 Let's create a simple WebRTC application. It will show a video element on the screen, ask the user permission to use the camera, and show a live video stream in the browser.
 
 @[Webcam demo]({"stubs":["local/sample1/client.js"], "command":"sh /project/target/local/sample1/run.sh"})
