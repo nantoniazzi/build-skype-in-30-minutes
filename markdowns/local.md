@@ -21,7 +21,7 @@ Let's create a simple WebRTC application. It will show a video element on the sc
 
 @[Webcam demo]({"stubs":["local/sample1/client.js"], "command":"sh /project/target/local/sample1/run.sh"})
 
-> Here we create the `hasUserMedia()` function which checks whether WebRTC is supported or not. Then we access the `getUserMedia` function where the second parameter is a callback that accept the stream coming from the user's device. Then we load our stream into the video element using window.URL.createObjectURL which creates a URL representing the object given in parameter.
+> We access the `getUserMedia` function which returns a promise with the stream coming from the user's device. Then we load our stream into the video element using `window.URL.createObjectURL` which creates a URL representing the object given in parameter.
 
 ### Send video output to a peer
 
