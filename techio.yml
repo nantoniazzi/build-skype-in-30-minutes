@@ -1,6 +1,10 @@
-title : Base template
+title : Code the new Skype in 30 minutes
 plan:
-  - title: Part 1
-    statement: markdowns/part1.md
-  - title: Part 2
-    statement: markdowns/part2.md
+  - title: Overview
+    statement: markdowns/overview.md
+  - title: Play in local
+    statement: markdowns/local.md
+  - title: Signaling server
+    statement: markdowns/server.md
+  - title: Connected clients
+    statement: markdowns/connected.md
