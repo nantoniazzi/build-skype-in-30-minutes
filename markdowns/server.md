@@ -21,4 +21,4 @@ The WebRTC specification does not contain any standards about exchanging informa
 
 We are going to implement a little server dedicated in the exchange of the contact informations.
 
-@[Server example]({"stubs": ["server/sample1/server.js"], "command": "server/sample1/run.sh"})
+@[Server example]({"stubs": ["server/sample1/server.js"], "command": "sh /project/target/server/sample1/run.sh"})
