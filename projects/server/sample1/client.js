@@ -9,15 +9,14 @@ var callButton = document.getElementById('callButton');
 var hangupButton = document.getElementById('hangupButton');
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
+var shareUrl = document.getElementById('shareUrl');
 
 var offerOptions = {
     offerToReceiveAudio: true,
     offerToReceiveVideo: true
-}
+};
 
-callButton.disabled = false;
-hangupButton.disabled = true;
-
+shareUrl.value = document.location.href;
 // Acquire the media inputs, display it and store it in localStream
 // (to send the stream accross the peer connection)
 navigator.mediaDevices.getUserMedia({ audio: false, video: true })

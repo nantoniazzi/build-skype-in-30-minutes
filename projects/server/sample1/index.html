@@ -3,13 +3,12 @@
 
 <head>
 
-  <title>Realtime communication with WebRTC</title>
-
-  <link rel="stylesheet" href="main.css" />
-
+    <link rel="stylesheet" href="main.css" />
 </head>
 
 <body>
+
+    <input type="text" id="shareUrl"> <button id="copyButton">Copy</button><br><br>
 
   <div class="webcams">
     <div class="webcam">
@@ -20,6 +19,11 @@
       <video id="remoteVideo" autoplay></video>
       <div class="legend">Friend (remote)</div>
     </div>
+  </div>
+
+  <div>
+    <button id="callButton">Call</button>
+    <button id="hangupButton">Hang Up</button>
   </div>
 
   <script src="client.js"></script>
