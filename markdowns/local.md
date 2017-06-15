@@ -32,3 +32,48 @@ var pc = RTCPeerConnection(configuration);
 ```
 
 @[Webcam demo]({"stubs":["local/sample2/client.js", "local/sample2/index.html", "local/sample2/main.css"], "command":"sh /project/target/local/sample2/run.sh"})
+
+In this example, `pc1` represents the local peer (caller) and `pc2` represents the remote peer (callee).
+
+## Caller
+
+```js
+// servers is an optional config parameter (see TURN and STUN discussions later)
+pc1 = new RTCPeerConnection(servers);
+pc1.addStream(localStream);
+```
+
+Create an offer and set it as the local description for `pc1` and as the remote description for `pc2`. This can be done directly in the code without using signaling, because both caller and callee are on the same page:
+
+```js
+pc1.createOffer(function(desc) {
+  pc1.setLocalDescription(desc);
+  pc2.setRemoteDescription(desc);
+  pc2.createAnswer(gotDescription2);
+});
+```
+
+## Callee
+
+Create `pc2` and, when the stream from `pc1` is added, display it in a video element:
+
+```js
+pc2 = new RTCPeerConnection(servers);
+pc2.onaddstream = function(e){
+  vid2.src = URL.createObjectURL(e.stream);
+};
+```
+
+In the real world, WebRTC needs servers, however simple, so the following can happen:
+
+1. Users discover each other and exchange 'real world' details such as names.
+2. WebRTC client applications (peers) exchange network information.
+3. Peers exchange data about media such as video format and resolution.
+4. WebRTC client applications traverse NAT gateways and firewalls.
+
+In other words, WebRTC needs four types of server-side functionality:
+
+- User discovery and communication.
+- Signaling.
+- NAT/firewall traversal.
+- Relay servers in case peer-to-peer communication fails.
