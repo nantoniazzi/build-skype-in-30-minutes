@@ -1,14 +1,19 @@
 // { autofold
 'use strict';
 
-var localStream;
-var pc1;
-var pc2;
+var localStream; // medial (webcam) local stream
+var pc1; // peer connection 1
+var pc2; // peer connection 2
 
 var callButton = document.getElementById('callButton');
 var hangupButton = document.getElementById('hangupButton');
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
+
+var offerOptions = {
+    offerToReceiveAudio: true,
+    offerToReceiveVideo: true
+}
 
 callButton.disabled = false;
 hangupButton.disabled = true;
@@ -41,10 +46,7 @@ callButton.onclick = function () {
     // Creates an offer which will generate a SDP (Session Description Protocol).
     // The SDP contains all informations attached to the session like codecs, supported
     // options, and the list of all the already connected candidadtes.
-    pc1.createOffer({
-        offerToReceiveAudio: true,
-        offerToReceiveVideo: true
-    }).then(function (desc) {
+    pc1.createOffer().then(function (desc) {
         // console.log('offer description', desc);
         // Uncomment the previous line to inspect the value of the desc.sdp;
 
@@ -67,17 +69,9 @@ callButton.onclick = function () {
         });
     });
 
-    pc2.onaddstream = function (e) {
-        remoteVideo.srcObject = e.stream;
-    }
-
-    pc1.onicecandidate = function (e) {
-        pc2.addIceCandidate(new RTCIceCandidate(e.candidate));
-    };
-
-    pc2.onicecandidate = function (e) {
-        pc1.addIceCandidate(new RTCIceCandidate(e.candidate));
-    };
+    pc2.onaddstream = function (e) { remoteVideo.srcObject = e.stream; }
+    pc1.onicecandidate = function (e) { pc2.addIceCandidate(new RTCIceCandidate(e.candidate)); };
+    pc2.onicecandidate = function (e) { pc1.addIceCandidate(new RTCIceCandidate(e.candidate)); };
 
 // { autofold    
 };
