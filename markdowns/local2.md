@@ -57,7 +57,7 @@ In this example we connect two peers within the same browser, simulating a local
 
 The local stream obtained using `getUserMedia` is sent from `peer1` (local, caller) to `peer2` (remote, callee).
 
-The local stream and the stream from peer2 are both displayed in &lt:video&gt; elements.
+The local stream and the stream from peer2 are both displayed in `<video>` elements.
 
 ## Caller
 
