@@ -4,8 +4,8 @@ plan:
 #    statement: markdowns/overview.md
   - title: Play in local
     statement: markdowns/local.md
-#  - title: Signaling server
-#    statement: markdowns/server.md
+  - title: Signaling server
+    statement: markdowns/server.md
 #  - title: Connected clients
 #    statement: markdowns/connected.md
 
