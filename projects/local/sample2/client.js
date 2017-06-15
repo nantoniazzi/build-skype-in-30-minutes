@@ -1,3 +1,4 @@
+// { autofold
 'use strict';
 
 var localStream;
@@ -24,24 +25,28 @@ callButton.onclick = function () {
     hangupButton.disabled = false;
 
     var servers = null;
+// }
 
-    // We create 2 Peer connection, one for each peer
+    // We simulate 2 clients (local and remote), each one use a peer connection
+
+    // We create 2 Peer connections, one for each peer
     // (This is for a demo purpose, usually, you only have 1 peer connection)
-    // The server parameter will be explained later
+    // The "servers" parameter will be explained later
     pc1 = new RTCPeerConnection(servers);
     pc2 = new RTCPeerConnection(servers);
 
     // We send the local stream into the peer connection
     pc1.addStream(localStream);
 
-    // Creates an offer which will generate a SDP (Session Description Protocol)
-    // the SDP contains all informations attached to the session like codecs, supported
-    // options, and the list of all the already connected candidadtes
+    // Creates an offer which will generate a SDP (Session Description Protocol).
+    // The SDP contains all informations attached to the session like codecs, supported
+    // options, and the list of all the already connected candidadtes.
     pc1.createOffer({
         offerToReceiveAudio: true,
         offerToReceiveVideo: true
     }).then(function (desc) {
-        // play with console.log(desc) or debugger to inspect the value of the desc.sdp;
+        // console.log('offer description', desc);
+        // Uncomment the previous line to inspect the value of the desc.sdp;
 
         // We attach the desc as local description of pc1
         pc1.setLocalDescription(desc);
@@ -73,6 +78,8 @@ callButton.onclick = function () {
     pc2.onicecandidate = function (e) {
         pc1.addIceCandidate(new RTCIceCandidate(e.candidate));
     };
+
+// { autofold    
 };
 
 hangupButton.onclick = function () {
@@ -83,3 +90,5 @@ hangupButton.onclick = function () {
     hangupButton.disabled = true;
     callButton.disabled = false;
 };
+
+// }
