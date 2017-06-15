@@ -13,7 +13,7 @@ There are two ways to output MediaStream objects. First, we can render output in
 
 The `getUserMedia()` method is the primary way to access local input devices.
 
-```js
+```javascript
 var promise = navigator.mediaDevices.getUserMedia(constraints);
 ```
 
@@ -27,7 +27,7 @@ Let's create a simple WebRTC application. It will show a video element on the sc
 
 The RTCPeerConnection API is the core of the peer-to-peer connection between each of the browsers. To create the RTCPeerConnection objects simply write
 
-```js
+```javascript
 var pc = RTCPeerConnection(configuration);
 ```
 
@@ -37,7 +37,7 @@ In this example, `pc1` represents the local peer (caller) and `pc2` represents t
 
 ## Caller
 
-```js
+```javascript
 // servers is an optional config parameter (see TURN and STUN discussions later)
 pc1 = new RTCPeerConnection(servers);
 pc1.addStream(localStream);
@@ -45,7 +45,7 @@ pc1.addStream(localStream);
 
 Create an offer and set it as the local description for `pc1` and as the remote description for `pc2`. This can be done directly in the code without using signaling, because both caller and callee are on the same page:
 
-```js
+```javascript
 pc1.createOffer(function(desc) {
   pc1.setLocalDescription(desc);
   pc2.setRemoteDescription(desc);
@@ -57,7 +57,7 @@ pc1.createOffer(function(desc) {
 
 Create `pc2` and, when the stream from `pc1` is added, display it in a video element:
 
-```js
+```javascript
 pc2 = new RTCPeerConnection(servers);
 pc2.onaddstream = function(e){
   vid2.src = URL.createObjectURL(e.stream);
@@ -71,9 +71,12 @@ In the real world, WebRTC needs servers, however simple, so the following can ha
 3. Peers exchange data about media such as video format and resolution.
 4. WebRTC client applications traverse NAT gateways and firewalls.
 
+
 In other words, WebRTC needs four types of server-side functionality:
 
 - User discovery and communication.
 - Signaling.
 - NAT/firewall traversal.
 - Relay servers in case peer-to-peer communication fails.
+
+The next chapter will illustrate the implementation of the server part to handle user discovery and signaling.
