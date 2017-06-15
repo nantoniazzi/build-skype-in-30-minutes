@@ -9,7 +9,7 @@ The API has a few key points
 
 There are two ways to output MediaStream objects. First, we can render output into a video or audio element. Secondly, we can send output to the RTCPeerConnection object, which then send it to a remote peer.
 
-### Render the media output to a video
+# Render the media output to a video
 
 The `getUserMedia()` method is the primary way to access local input devices.
 
@@ -23,14 +23,12 @@ Let's create a simple WebRTC application. It will show a video element on the sc
 
 > We access the `getUserMedia` function which returns a promise with the stream coming from the user's device. Then we load our stream into the video element using `window.URL.createObjectURL` which creates a URL representing the object given in parameter.
 
-### Send video output to a peer
+# Send video output to a peer
 
 The RTCPeerConnection API is the core of the peer-to-peer connection between each of the browsers. To create the RTCPeerConnection objects simply write
 
 ```js
 var pc = RTCPeerConnection(configuration);
 ```
-
-## WIIIIIPPP
 
 @[Webcam demo]({"stubs":["local/sample2/client.js", "local/sample2/index.html", "local/sample2/main.css"], "command":"sh /project/target/local/sample2/run.sh"})
