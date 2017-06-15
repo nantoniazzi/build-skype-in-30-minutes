@@ -86,8 +86,8 @@ var pollAnswer = function() {
         if(!data.desc) {
             setTimeout(pollAnswer, 1000);
         } else {
-            console.log('remote =>', data.desc);
             peer.setRemoteDescription(data.desc);
+            pollCandidates();
         }
     });
 };
@@ -135,6 +135,7 @@ var pollOffer = function() {
                     }
                 });
 
+                pollCandidates();
             });
         }
     });
