@@ -38,4 +38,4 @@ app.get('/getAnswer', function(req, res) {
     res.send(secondUser.desc);
 });
 
-app.listen(8080);
+app.listen(3000);
