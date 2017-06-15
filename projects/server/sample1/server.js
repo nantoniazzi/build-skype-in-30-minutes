@@ -5,21 +5,37 @@ var app = express();
 app.use(express.static('.'));
 app.use(bodyParser.urlencoded({extended: true}));
 
-var user1 = null;
-var user2 = null;
+var firstUser = null;
+var secondUser = null;
 
-// Get the list of connected user and their associated data (name and SDP)
-app.post('/users', function(req, res) {
-    res.send('hello');
+app.post('/register', function(req, res) {
+    let ret = {};
+    if(firstUser === null) {
+        ret = {'role': 'makeOffer'};
+    } else if(secondUser === null) {
+        ret = {'role': 'pollOffer'};
+    } else {
+        res = {'error': 'No more than 2 users allowed'};
+    }
+    res.send(ret);
 });
 
-// New connection to the server
-app.post('/join', function(req, res) {
-
+app.post('/offer', function(req, res) {
+    firstUser.desc = req.body.desc;
+    res.sendStatus(200);
 });
 
 app.post('/answer', function(req, res) {
+    secondUser.desc = req.body.desc;
+    res.sendStatus(200);
+});
 
+app.get('/getOffer', function(req, res) {
+    res.send(firstUser.desc);
+});
+
+app.get('/getAnswer', function(req, res) {
+    res.send(secondUser.desc);
 });
 
 app.listen(3000);
