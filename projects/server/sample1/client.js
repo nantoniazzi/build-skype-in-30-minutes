@@ -25,6 +25,20 @@ navigator.mediaDevices.getUserMedia({ audio: false, video: true })
 
 // }
 
+var pollCandidates = function() {
+    fetch('/getCandidates', {
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then((resp) => resp.json())
+    .then(function(data) {
+        for(var i = 0; i < data.length; i++) {
+            peer.addIceCandidate(new RTCIceCandidate(data[i]));
+        }
+    });
+
+    setTimeout(pollCandidates, 1000);
+}
+
 var register = function() {
     var servers = { 
          "iceServers": [{ "url": "stun:stun.1.google.com:19302" }] 

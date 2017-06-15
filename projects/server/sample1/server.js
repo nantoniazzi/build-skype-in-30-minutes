@@ -46,8 +46,15 @@ app.get('/getAnswer', function(req, res) {
     res.send({'desc': secondUserDesc});
 });
 
+var candidates = [];
+
 app.post('/candidate', function(req, res) {
     console.log('candidate', req.body.candidate);
+    candidates.push(req.body.candidate);
+});
+
+app.get('/getCandidates', function(req, res) {
+    res.send(candidates);
 });
 
 app.listen(3000);
