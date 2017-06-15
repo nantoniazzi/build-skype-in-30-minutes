@@ -83,10 +83,12 @@ peer2.onaddstream = function(e) {
 
 ## Offer/Answer between peer1 and peer2
 
-peer1 and peer2 must go through the Offer/Answer protocol defined by WebRTC to exchange critical information regarding their capabilities and parameters
-(use of udp? tcp? what is my IP address? what is the format of my stream, etc.)
+`peer1` and `peer2` must go through the **Offer/Answer** protocol defined by WebRTC to exchange critical information regarding their capabilities and parameters
+(use of udp or tcp?, what is my IP address? what is the format of my stream?, etc.)
 
-The exchange is called **Signaling** and is done through a **Signal Channel** which is usually a web server using WebSockets. In our simple example, however, everything is done within the same web page and the exchange is done directly in the code without the need to serialize data.
+The exchange is called **Signaling** and is done through a **Signal Channel** which is usually a web server using WebSockets.
+
+In our simple example, however, everything is done within the same web page and the exchange is done directly in the code without the need to serialize data.
 
 ```javascript
 peer1.createOffer(function(offer) {
@@ -101,7 +103,9 @@ peer1.createOffer(function(offer) {
 
 ## ICE Candidates
 
-A final part of the protocol is the exchange of ICE Candidates between the peers. Technically this is the result of the Offer/Answer: once each peer know about the capabilities of the other peer, they agree on the proper way to communicate by each sending an `RTCIceCandidate` to the other peer. The exchange also goes through the Signal Channel. Again, for this example, the Signal Channel is non-existant of both peers operate on the same Web Page and there is no need to go through a server.
+A final part of the protocol is the exchange of ICE Candidates between the peers. Technically this is the result of the Offer/Answer: once each peer knows about the capabilities of the other peer, they agree on the proper way to communicate by each sending an `RTCIceCandidate` to the other peer.
+
+The exchange also goes through the Signal Channel. Again, for this example, the Signal Channel is non-existant of both peers operate on the same Web Page and there is no need to go through a server.
 
 ```javascript
 peer1.onicecandidate = function (e) { peer2.addIceCandidate(new RTCIceCandidate(e.candidate)); };
