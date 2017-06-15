@@ -29,6 +29,8 @@ callButton.onclick = function () {
     callButton.disabled = true;
     hangupButton.disabled = false;
 
+    // Objects containing information about STUN and TURN servers
+    // We do not use it yet. STUN and TURN servers are explained later
     var servers = null;
 // }
 
