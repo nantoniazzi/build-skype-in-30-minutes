@@ -12,5 +12,5 @@ plan:
 projects:
   "default":
     root: /projects
-    buildScript: sh build.sh
+    buildCommand: sh build.sh
     runner: node:alpine
