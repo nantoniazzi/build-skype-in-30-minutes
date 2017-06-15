@@ -1,9 +1,11 @@
 title : Code the new Skype in 30 minutes
 plan:
-#  - title: Overview
-#    statement: markdowns/overview.md
+  - title: Overview
+    statement: markdowns/overview.md
   - title: Play in local
     statement: markdowns/local.md
+  - title: Play in local (new)
+    statement: markdowns/local2.md
   - title: Signaling server
     statement: markdowns/server.md
 #  - title: Connected clients
