@@ -64,7 +64,7 @@ app.get('/getCandidates', function(req, res) {
 });
 
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
+  console.log(err.stack);
   res.status(500).send('Something broke!');
 });
 
