@@ -9,9 +9,11 @@ app.use(bodyParser.json());
 var firstUserDesc = null;
 var secondUserDesc = null;
 
-setTimeout(function() {
+var beat = function() {
     console.log('<3');
-}, 1000);
+    setTimeout(beat, 1000);
+};
+beat();
 
 app.post('/register', function(req, res) {
     console.log('register');
@@ -61,4 +63,10 @@ app.get('/getCandidates', function(req, res) {
     res.send(candidates);
 });
 
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 app.listen(3000);
+
