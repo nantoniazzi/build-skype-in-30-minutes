@@ -9,6 +9,10 @@ app.use(bodyParser.json());
 var firstUserDesc = null;
 var secondUserDesc = null;
 
+setTimeout(function() {
+    console.log('<3');
+}, 1000);
+
 app.post('/register', function(req, res) {
     console.log('register');
     let ret = {};
