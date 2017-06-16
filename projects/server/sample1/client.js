@@ -15,22 +15,30 @@ var offerOptions = {
 };
 
 shareUrl.value = document.location.href;
-// Acquire the media inputs, display it and store it in localStream
-// (to send the stream accross the peer connection)
-navigator.mediaDevices.getUserMedia({ audio: false, video: true })
-    .then(function (stream) {
-        localVideo.srcObject = localStream = stream;
-        register();
-    })
 
 // }
 
+var post = function(path, params) {
+    var body = params ? JSON.stringify(params) : null;
+    
+    return fetch(path, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: body
+            });
+};
+
+var get = function(path, params) {
+    var body = params ? JSON.stringify(params) : null;
+    
+    return fetch(path, {
+              headers: { 'Content-Type': 'application/json' },
+              body: body
+            }).then((resp) => resp.json());
+}
+
 var pollCandidates = function() {
-    fetch('/getCandidates', {
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then((resp) => resp.json())
-    .then(function(data) {
+    get('/getCandidates').then(function(data) {
         for(var i = 0; i < data.length; i++) {
             peer.addIceCandidate(new RTCIceCandidate(data[i]));
         }
@@ -40,35 +48,33 @@ var pollCandidates = function() {
 }
 
 var register = function() {
-    var servers = { 
-         "iceServers": [{ "url": "stun:stun.1.google.com:19302" }] 
-      };
-    peer = new RTCPeerConnection(servers);
+var STUN = {
+    'url': 'stun:stun.l.google.com:19302',
+};
+
+var TURN = {
+    url: 'turn:35.184.31.223:3478',
+    username: 'anonymous',
+    credential: 'anonymous'
+};
+
+var iceServers = 
+{
+    iceServers: [STUN, TURN]
+};
+
+    peer = new RTCPeerConnection(iceServers);
     peer.addStream(localStream);
     peer.onaddstream = function (e) {
-        debugger;
         if (e.stream) remoteVideo.srcObject = e.stream;
     }
     peer.onicecandidate = function (e) {
         if(e.candidate) {
-//            peer.addIceCandidate(new RTCIceCandidate(e.candidate));
-            fetch('/candidate', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(e.candidate)
-            })
-            .then(function(data) {
-                console.log('done');
-            });
+            post('/candidate', {'candidate' : e.candidate});
         }
     };
     
-    fetch('/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then((resp) => resp.json())
-    .then(function(data) {
+    post('/register').then((resp) => resp.json()).then(function(data) {
         if(data.role === 'makeOffer') {
             makeOffer();
         } else if(data.role === 'pollOffer') {
@@ -78,29 +84,25 @@ var register = function() {
 };
 
 var pollAnswer = function() {
-    fetch('/getAnswer', {
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then((resp) => resp.json())
-    .then(function(data) {
+    console.log('polling answer');
+    get('/getAnswer').then(function(data) {
         if(!data.desc) {
             setTimeout(pollAnswer, 1000);
         } else {
             peer.setRemoteDescription(data.desc);
-//            pollCandidates();
+            pollCandidates();
         }
     });
 };
 
 var makeOffer = function () {
+    console.log('creating an offer');
     peer.createOffer().then(function (desc) {
+        console.log('offer created');
         peer.setLocalDescription(desc);
-        fetch('/offer', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ desc: desc })
-        })
-        .then(function(data) {
+        console.log('posting offer');
+        post('/offer', { desc: desc }).then(function(data) {
+            console.log('offer posted');
             pollAnswer();
         });
     });
@@ -108,11 +110,7 @@ var makeOffer = function () {
 
 var pollOffer = function() {
     
-    fetch('/getOffer', {
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then((resp) => resp.json())
-    .then(function(data) {
+    get('/getOffer').then(function(data) {
         if(!data.desc) {
             setTimeout(pollOffer, 1000);
         } else {
@@ -122,12 +120,8 @@ var pollOffer = function() {
                 peer.setLocalDescription(desc);
 //                peer.setRemoteDescription(data.desc);
                 
-                fetch('/answer', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ desc: desc })
-                })
-                .then(function(data) {
+                post('/answer', { desc: desc })
+                then((resp) => resp.json()).then(function(data) {
                     if(data.role === 'makeOffer') {
                         makeOffer();
                     } else if(data.role === 'pollOffer') {
@@ -135,10 +129,19 @@ var pollOffer = function() {
                     }
                 });
 
-//                pollCandidates();
+                pollCandidates();
             });
         }
     });
-}
+};
+
+// Acquire the media inputs, display it and store it in localStream
+// (to send the stream accross the peer connection)
+navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+    .then(function (stream) {
+        localVideo.srcObject = localStream = stream;
+        register();
+    });
+
 
 // }

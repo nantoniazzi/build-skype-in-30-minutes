@@ -10,11 +10,11 @@ var firstUserDesc = null;
 var secondUserDesc = null;
 
 var beat = function() {
-    console.log('<3');
-    setTimeout(beat, 300);
+    console.log(new Date().getTime() + ' <3');
+    setTimeout(beat, 800);
 };
-beat();
-/*
+//beat();
+
 app.post('/register', function(req, res) {
     console.log('register');
     let ret = {};
@@ -31,13 +31,14 @@ app.post('/register', function(req, res) {
 });
 
 app.post('/offer', function(req, res) {
-    console.log('offer', req.body);
+    console.log('offer');
     firstUserDesc = req.body.desc;
     res.sendStatus(200);
+    console.log('offer sent');
 });
 
 app.post('/answer', function(req, res) {
-    console.log('answer', req.body.desc);
+    console.log('answer');
     secondUserDesc = req.body.desc;
     res.sendStatus(200);
 });
@@ -48,16 +49,19 @@ app.get('/getOffer', function(req, res) {
 });
 
 app.get('/getAnswer', function(req, res) {
-    console.log('getAnswer');
+    console.log(secondUserDesc ? '  getAnswer -> YES' : '  getAnswer -> NO');
     res.send({'desc': secondUserDesc});
 });
 
 var candidates = [];
 
 app.post('/candidate', function(req, res) {
-    console.log('candidate', req.body.candidate);
+    console.log('candidate');
+//    console.log('  ' + req.body.candidate);
     candidates.push(req.body.candidate);
+    res.sendStatus(200);
 });
+
 
 app.get('/getCandidates', function(req, res) {
     res.send(candidates);
@@ -67,6 +71,6 @@ app.use(function(err, req, res, next) {
   console.log(err.stack);
   res.status(500).send('Something broke!');
 });
-*/
+
 app.listen(3000);
 
