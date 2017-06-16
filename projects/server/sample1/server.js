@@ -11,10 +11,10 @@ var secondUserDesc = null;
 
 var beat = function() {
     console.log('<3');
-    setTimeout(beat, 1000);
+    setTimeout(beat, 300);
 };
 beat();
-
+/*
 app.post('/register', function(req, res) {
     console.log('register');
     let ret = {};
@@ -67,6 +67,6 @@ app.use(function(err, req, res, next) {
   console.log(err.stack);
   res.status(500).send('Something broke!');
 });
-
+*/
 app.listen(3000);
 
