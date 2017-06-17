@@ -16,8 +16,23 @@ var offerOptions = {
 
 shareUrl.value = document.location.href;
 
-// }
+var STUN = {
+    'url': 'stun:stun.l.google.com:19302',
+};
 
+var TURN = {
+    url: 'turn:numb.viagenie.ca',
+    username: 'nicolas.antoniazzi@gmail.com',
+    credential: 'nico_anto'
+};
+
+var config = 
+{
+    iceServers: [STUN, TURN]
+};
+
+// }
+  
 var post = function(path, params) {
     var body = params ? JSON.stringify(params) : null;
     
@@ -38,7 +53,7 @@ var get = function(path, params) {
 }
 
 var pollCandidates = function() {
-    get('/getCandidates').then(function(data) {
+    get('/candidates').then(function(data) {
         for(var i = 0; i < data.length; i++) {
             peer.addIceCandidate(new RTCIceCandidate(data[i]));
         }
@@ -48,22 +63,7 @@ var pollCandidates = function() {
 }
 
 var register = function() {
-var STUN = {
-    'url': 'stun:stun.l.google.com:19302',
-};
-
-var TURN = {
-    url: 'turn:35.184.31.223:3478',
-    username: 'anonymous',
-    credential: 'anonymous'
-};
-
-var iceServers = 
-{
-    iceServers: [STUN, TURN]
-};
-
-    peer = new RTCPeerConnection(iceServers);
+    peer = new RTCPeerConnection(config);
     peer.addStream(localStream);
     peer.onaddstream = function (e) {
         if (e.stream) remoteVideo.srcObject = e.stream;
@@ -85,7 +85,7 @@ var iceServers =
 
 var pollAnswer = function() {
     console.log('polling answer');
-    get('/getAnswer').then(function(data) {
+    get('/answer').then(function(data) {
         if(!data.desc) {
             setTimeout(pollAnswer, 1000);
         } else {
@@ -110,7 +110,7 @@ var makeOffer = function () {
 
 var pollOffer = function() {
     
-    get('/getOffer').then(function(data) {
+    get('/offer').then(function(data) {
         if(!data.desc) {
             setTimeout(pollOffer, 1000);
         } else {
@@ -137,11 +137,13 @@ var pollOffer = function() {
 
 // Acquire the media inputs, display it and store it in localStream
 // (to send the stream accross the peer connection)
+
 navigator.mediaDevices.getUserMedia({ audio: false, video: true })
     .then(function (stream) {
         localVideo.srcObject = localStream = stream;
         register();
     });
+
 
 
 // }

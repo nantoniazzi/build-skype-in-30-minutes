@@ -43,12 +43,12 @@ app.post('/answer', function(req, res) {
     res.sendStatus(200);
 });
 
-app.get('/getOffer', function(req, res) {
+app.get('/offer', function(req, res) {
     console.log('getOffer');
     res.send({'desc': firstUserDesc});
 });
 
-app.get('/getAnswer', function(req, res) {
+app.get('/answer', function(req, res) {
     console.log(secondUserDesc ? '  getAnswer -> YES' : '  getAnswer -> NO');
     res.send({'desc': secondUserDesc});
 });
@@ -63,7 +63,7 @@ app.post('/candidate', function(req, res) {
 });
 
 
-app.get('/getCandidates', function(req, res) {
+app.get('/candidates', function(req, res) {
     res.send(candidates);
 });
 
